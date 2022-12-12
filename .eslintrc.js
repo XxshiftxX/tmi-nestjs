@@ -27,6 +27,7 @@ module.exports = {
     },
   },
   rules: {
+    "object-curly-newline": ["error", { "multiline": true, "minProperties": 5 }],
     "class-methods-use-this": "off",
     "no-useless-constructor": "off",
     "no-underscore-dangle": "off",
