@@ -1,11 +1,19 @@
-import { Injectable, OnApplicationBootstrap, OnApplicationShutdown } from '@nestjs/common';
+import { Inject, Injectable, OnApplicationBootstrap, OnApplicationShutdown } from '@nestjs/common';
+import { DiscoveryService, MetadataScanner } from '@nestjs/core';
 import { Client } from 'tmi.js';
+import { TMI_MODULE_OPTIONS } from './constants/tmi-module-option.constant';
+import { OnResolver } from './resolver/on.resolver';
 
 @Injectable()
 export class TmiService implements OnApplicationBootstrap, OnApplicationShutdown {
   constructor(
+    @Inject(TMI_MODULE_OPTIONS)
+    private readonly discoveryService: DiscoveryService,
+    private readonly metadataScanner: MetadataScanner,
     private readonly client: Client,
-  ) {}
+  ) {
+    this.resolve();
+  }
 
   async onApplicationBootstrap() {
     await this.client.connect();
@@ -13,5 +21,22 @@ export class TmiService implements OnApplicationBootstrap, OnApplicationShutdown
 
   async onApplicationShutdown() {
     await this.client.disconnect();
+  }
+
+  resolve() {
+    const providers = this.discoveryService.getProviders();
+
+    providers.forEach((wrapper) => {
+      const { instance } = wrapper;
+      if (!instance) return;
+
+      this.metadataScanner.scanFromPrototype(
+        instance,
+        Object.getPrototypeOf(instance),
+        (methodName: string) => {
+          new OnResolver().resolve(instance, methodName, this.client);
+        },
+      );
+    });
   }
 }
