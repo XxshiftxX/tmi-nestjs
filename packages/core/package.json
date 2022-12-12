@@ -1,0 +1,16 @@
+{
+  "name": "@tmi-nestjs/core",
+  "version": "0.0.1-alpha.0",
+  "author": "XxshiftxX <contact@dev-shift.me>",
+  "homepage": "",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "*.md"
+  ],
+  "scripts": {
+    "build": "nest build"
+  }
+}
