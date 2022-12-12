@@ -1,6 +1,7 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { Client, Options } from 'tmi.js';
 import { DISCORD_MODULE_OPTIONS } from './constants/tmi-module-option.constant';
+import { TmiService } from './tmi.service';
 
 @Module({})
 export class TmiModule {
@@ -16,6 +17,7 @@ export class TmiModule {
           provide: Client,
           useValue: new Client(options),
         },
+        TmiService,
       ],
     };
   }
