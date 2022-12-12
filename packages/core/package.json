@@ -1,6 +1,6 @@
 {
   "name": "@tmi-nestjs/core",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "XxshiftxX <contact@dev-shift.me>",
   "homepage": "",
   "license": "MIT",
@@ -25,5 +25,5 @@
     "tsconfig-paths": "^4.1.1",
     "typescript": "^4.9.4"
   },
-  "gitHead": "49b1c9e6070f906369a5fa98fa3259b228c0487a"
+  "gitHead": "ecbb318a4c2314744436c1005ef977be8bac6da6"
 }
