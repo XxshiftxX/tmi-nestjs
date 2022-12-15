@@ -1,6 +1,7 @@
 import { Injectable, OnApplicationBootstrap, OnApplicationShutdown } from '@nestjs/common';
 import { DiscoveryService, MetadataScanner } from '@nestjs/core';
 import { Client } from 'tmi.js';
+import { OnCommandResolver } from './resolver/on-command.resolver';
 import { OnResolver } from './resolver/on.resolver';
 
 @Injectable()
@@ -34,6 +35,7 @@ export class TmiService implements OnApplicationBootstrap, OnApplicationShutdown
         Object.getPrototypeOf(instance),
         (methodName: string) => {
           new OnResolver().resolve(instance, methodName, this.client);
+          new OnCommandResolver().resolve(instance, methodName, this.client);
         },
       );
     });
