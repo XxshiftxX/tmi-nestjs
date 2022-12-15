@@ -3,7 +3,7 @@ import { CommandParameterOption, CommandParameterType, COMMAND_PARAMETER_DECORAT
 import { OnCommandDecoratorOptions, ON_COMMAND_DECORATOR } from '../decorators/command.decorator';
 import { Resolver } from './resolver';
 
-type OnCommandHandler = Record<string, (...args: any[]) => void>
+type OnCommandHandler = Record<string, (...args: any[]) => any>
 
 export class OnCommandResolver implements Resolver {
   resolve<T extends OnCommandHandler>(instance: T, methodName: string, client: Client) {
@@ -16,7 +16,7 @@ export class OnCommandResolver implements Resolver {
       Reflect.getMetadata(COMMAND_PARAMETER_DECORATOR, instance, methodName)
     );
 
-    client.on('message', (channel, userstate, message, self) => {
+    client.on('message', async (channel, userstate, message, self) => {
       if (self) return;
       if (!message.startsWith(`${metadata.prefix + metadata.command} `)) return;
 
@@ -42,7 +42,9 @@ export class OnCommandResolver implements Resolver {
         }
       });
 
-      instance[methodName](...parameters);
+      const result = instance[methodName](...parameters);
+
+      await client.say(channel, result);
     });
   }
 }
