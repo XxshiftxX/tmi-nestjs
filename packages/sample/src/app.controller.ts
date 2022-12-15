@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import {
-  Message, On, OnCommand, Parameter, Rest, UserState,
+  On, OnCommand, Parameter, Rest, UserState,
 } from '@tmi-nestjs/core';
 import { ChatUserstate, Userstate } from 'tmi.js';
 
@@ -8,6 +8,8 @@ import { ChatUserstate, Userstate } from 'tmi.js';
 export class AppController {
   @On({ events: 'message' })
   async handler(channel: string, tags: ChatUserstate, message: string, self: boolean) {
+    if (self) return;
+
     console.log(channel, message);
   }
 
