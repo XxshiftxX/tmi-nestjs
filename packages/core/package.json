@@ -11,6 +11,7 @@
     "*.md"
   ],
   "scripts": {
+    "prebuild": "rimraf dist",
     "build": "nest build"
   },
   "devDependencies": {
@@ -20,6 +21,7 @@
     "@types/node": "^18.11.13",
     "@types/tmi.js": "^1.8.2",
     "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2",
     "tmi.js": "^1.8.5",
     "ts-loader": "^9.4.2",
     "tsconfig-paths": "^4.1.1",
