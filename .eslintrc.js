@@ -31,8 +31,11 @@ module.exports = {
     "class-methods-use-this": "off",
     "no-useless-constructor": "off",
     "no-underscore-dangle": "off",
+    "no-shadow": "off",
+    "no-case-declarations": "off",
 
     "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/member-delimiter-style": "error",
 
     "import/no-extraneous-dependencies": ["error", { "devDependencies": ["**/*.spec.ts"] }],
     "import/prefer-default-export": "off",
