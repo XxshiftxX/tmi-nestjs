@@ -18,7 +18,7 @@ export class OnCommandResolver implements Resolver {
 
     client.on('message', (channel, userstate, message, self) => {
       if (self) return;
-      if (!message.startsWith(metadata.prefix)) return;
+      if (!message.startsWith(`${metadata.prefix + metadata.command} `)) return;
 
       const [, ...splitted] = message.split(' ');
 

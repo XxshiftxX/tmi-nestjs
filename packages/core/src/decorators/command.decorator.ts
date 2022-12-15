@@ -1,6 +1,7 @@
 export const ON_COMMAND_DECORATOR = '__ON_COMMAND_DECORATOR__';
 export interface OnCommandDecoratorOptions {
   prefix: string;
+  command: string;
 }
 
 export const OnCommand = (options: OnCommandDecoratorOptions): MethodDecorator => (
