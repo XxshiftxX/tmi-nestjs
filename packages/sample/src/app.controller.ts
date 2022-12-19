@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, ParseIntPipe } from '@nestjs/common';
 import {
   On, OnCommand, Parameter, Rest, UserState,
 } from '@tmi-nestjs/core';
@@ -21,5 +21,13 @@ export class AppController {
     @Rest() rest: string,
   ) {
     return `[${userstate.username} first: ${first} | second: ${second} | rest: ${rest}`;
+  }
+
+  @OnCommand({ prefix: '!', command: '덧셈' })
+  async add(
+    @Parameter(new ParseIntPipe()) first: number,
+    @Parameter(new ParseIntPipe()) second: number,
+  ) {
+    return `${first} + ${second} = ${first + second}`;
   }
 }
