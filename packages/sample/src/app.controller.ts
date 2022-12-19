@@ -13,16 +13,13 @@ export class AppController {
     console.log(channel, message);
   }
 
-  @OnCommand({ prefix: '!' })
+  @OnCommand({ prefix: '!', command: '커맨드' })
   async command(
     @UserState() userstate: Userstate,
     @Parameter() first: string,
     @Parameter() second: string,
     @Rest() rest: string,
   ) {
-    console.log('username', userstate.username);
-    console.log('first', first);
-    console.log('second', second);
-    console.log('rest', rest);
+    return `[${userstate.username} first: ${first} | second: ${second} | rest: ${rest}`;
   }
 }
