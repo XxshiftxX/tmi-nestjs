@@ -1,3 +1,5 @@
+import { PipeTransform } from '@nestjs/common';
+
 export const COMMAND_PARAMETER_DECORATOR = '__COMMAND_PARAMETER_DECORATOR__';
 export enum CommandParameterType {
   UserState,
@@ -7,7 +9,7 @@ export enum CommandParameterType {
   Rest,
 }
 
-export type CommandParameterOption = { index: number } & (
+export type CommandParameterOption = { index: number; pipes: PipeTransform[] } & (
   { type: CommandParameterType.UserState } |
   { type: CommandParameterType.Message } |
   { type: CommandParameterType.Channel } |
@@ -31,8 +33,18 @@ export const BuildCommandParameterDecorator = (
   )
 );
 
-export const UserState = () => BuildCommandParameterDecorator(CommandParameterType.UserState);
-export const Message = () => BuildCommandParameterDecorator(CommandParameterType.Message);
-export const Channel = () => BuildCommandParameterDecorator(CommandParameterType.Channel);
-export const Parameter = () => BuildCommandParameterDecorator(CommandParameterType.Parameter);
-export const Rest = () => BuildCommandParameterDecorator(CommandParameterType.Rest);
+export const UserState = (...pipes: PipeTransform[]) => (
+  BuildCommandParameterDecorator(CommandParameterType.UserState, { pipes })
+);
+export const Message = (...pipes: PipeTransform[]) => (
+  BuildCommandParameterDecorator(CommandParameterType.Message, { pipes })
+);
+export const Channel = (...pipes: PipeTransform[]) => (
+  BuildCommandParameterDecorator(CommandParameterType.Channel, { pipes })
+);
+export const Parameter = (...pipes: PipeTransform[]) => (
+  BuildCommandParameterDecorator(CommandParameterType.Parameter, { pipes })
+);
+export const Rest = (...pipes: PipeTransform[]) => (
+  BuildCommandParameterDecorator(CommandParameterType.Rest, { pipes })
+);
