@@ -34,7 +34,7 @@ export class OnCommandResolver implements Resolver {
             parameterTargetIndex += 1;
             return parameter;
           case CommandParameterType.Rest:
-            const rest = splitted.slice(parameterTargetIndex + 1).join(' ');
+            const rest = splitted.slice(parameterTargetIndex).join(' ');
             parameterTargetIndex = null;
             return rest;
 
@@ -42,7 +42,7 @@ export class OnCommandResolver implements Resolver {
         }
       });
 
-      const result = instance[methodName](...parameters);
+      const result = await instance[methodName](...parameters);
 
       await client.say(channel, result);
     });
