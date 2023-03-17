@@ -1,4 +1,4 @@
-import { PipeTransform } from '@nestjs/common';
+import { PipeTransform, Type } from '@nestjs/common';
 
 export const COMMAND_PARAMETER_DECORATOR = '__COMMAND_PARAMETER_DECORATOR__';
 export enum CommandParameterType {
@@ -9,7 +9,8 @@ export enum CommandParameterType {
   Rest,
 }
 
-export type CommandParameterOption = { index: number; pipes: PipeTransform[] } & (
+// eslint-disable-next-line max-len
+export type CommandParameterOption = { index: number; pipes: (Type<PipeTransform> | PipeTransform)[] } & (
   { type: CommandParameterType.UserState } |
   { type: CommandParameterType.Message } |
   { type: CommandParameterType.Channel } |
@@ -33,18 +34,18 @@ export const BuildCommandParameterDecorator = (
   )
 );
 
-export const UserState = (...pipes: PipeTransform[]) => (
+export const UserState = (...pipes: (Type<PipeTransform> | PipeTransform)[]) => (
   BuildCommandParameterDecorator(CommandParameterType.UserState, { pipes })
 );
-export const Message = (...pipes: PipeTransform[]) => (
+export const Message = (...pipes: (Type<PipeTransform> | PipeTransform)[]) => (
   BuildCommandParameterDecorator(CommandParameterType.Message, { pipes })
 );
-export const Channel = (...pipes: PipeTransform[]) => (
+export const Channel = (...pipes: (Type<PipeTransform> | PipeTransform)[]) => (
   BuildCommandParameterDecorator(CommandParameterType.Channel, { pipes })
 );
-export const Parameter = (...pipes: PipeTransform[]) => (
+export const Parameter = (...pipes: (Type<PipeTransform> | PipeTransform)[]) => (
   BuildCommandParameterDecorator(CommandParameterType.Parameter, { pipes })
 );
-export const Rest = (...pipes: PipeTransform[]) => (
+export const Rest = (...pipes: (Type<PipeTransform> | PipeTransform)[]) => (
   BuildCommandParameterDecorator(CommandParameterType.Rest, { pipes })
 );

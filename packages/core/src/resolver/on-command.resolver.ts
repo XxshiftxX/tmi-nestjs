@@ -15,11 +15,11 @@ export class OnCommandResolver implements Resolver {
 
     const parameterOptions: CommandParameterOption[] = (
       Reflect.getMetadata(COMMAND_PARAMETER_DECORATOR, instance, methodName)
-    );
+    ) ?? [];
 
     client.on('message', async (channel, userstate, message, self) => {
       if (self) return;
-      if (!message.startsWith(`${metadata.prefix + metadata.command} `)) return;
+      if (!message.startsWith(metadata.prefix + metadata.command)) return;
 
       const values = this.getValueFromParameterOption(
         parameterOptions,
@@ -67,7 +67,8 @@ export class OnCommandResolver implements Resolver {
   private async getPipedValueFromParameterOption(options: CommandParameterOption[], values: any[]) {
     return Promise.all(values.map((value, index) => (
       options[index].pipes.reduce(
-        (value: any, pipe: PipeTransform) => pipe.transform(value, { type: 'custom' }),
+        // eslint-disable-next-line new-cap
+        (value: any, pipe) => (typeof pipe === 'function' ? new pipe() : pipe).transform(value, { type: 'custom' }),
         value,
       )
     )));

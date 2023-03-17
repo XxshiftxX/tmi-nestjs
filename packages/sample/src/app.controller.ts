@@ -25,8 +25,8 @@ export class AppController {
 
   @OnCommand({ prefix: '!', command: '덧셈' })
   async add(
-    @Parameter(new ParseIntPipe()) first: number,
-    @Parameter(new ParseIntPipe()) second: number,
+    @Parameter(ParseIntPipe) first: number,
+    @Parameter(ParseIntPipe) second: number,
   ) {
     return `${first} + ${second} = ${first + second}`;
   }
