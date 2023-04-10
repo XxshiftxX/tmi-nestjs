@@ -1,26 +1,23 @@
 {
   "name": "tmi-nestjs",
+  "version": "0.0.0",
   "private": true,
   "workspaces": [
+    "apps/*",
     "packages/*"
   ],
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "clean": "lerna clean",
-    "build": "lerna run build --no-private",
-    "prepublish:release": "npm run build",
-    "postinstall": "npm run build",
-    "publish:release": "lerna publish -m \"chore: Publish release\" --no-private --conventional-commits --create-release github",
-    "publish:beta": "lerna publish --canary --preid beta -m \"chore: Publish beta release\" --no-private",
-    "lint": "eslint \"packages/{core,sample}/src/**/*.ts\" --fix"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.46.0",
-    "@typescript-eslint/parser": "^5.46.0",
-    "eslint": "^8.29.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-import-resolver-typescript": "^3.5.2",
-    "eslint-plugin-import": "^2.26.0",
-    "lerna": "^6.1.0"
-  }
+    "prettier": "latest",
+    "turbo": "latest"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "packageManager": "npm@8.11.0"
 }

@@ -1,31 +1,19 @@
 {
   "name": "@tmi-nestjs/core",
   "version": "0.0.11",
-  "author": "XxshiftxX <contact@dev-shift.me>",
+  "author": "XxshiftxX <qjfrntop12@gmail.com>",
   "homepage": "",
   "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist/**/*",
-    "*.md"
-  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "nest build"
+    "build": "tsup src/index.ts --format cjs --dts",
+    "dev": "npm run build -- --watch"
+  },
+  "dependencies": {
+    "typescript": "latest"
   },
   "devDependencies": {
-    "@nestjs/cli": "^9.1.5",
-    "@nestjs/common": "^9.2.1",
-    "@nestjs/core": "^9.2.1",
-    "@types/node": "^18.11.13",
-    "@types/tmi.js": "*",
-    "reflect-metadata": "^0.1.13",
-    "rimraf": "^3.0.2",
-    "tmi.js": "^1.8.5",
-    "ts-loader": "^9.4.2",
-    "tsconfig-paths": "^4.1.1",
-    "typescript": "^4.9.4"
-  },
-  "gitHead": "ecbb318a4c2314744436c1005ef977be8bac6da6"
+    "tsup": "^6.7.0"
+  }
 }

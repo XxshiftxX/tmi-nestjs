@@ -1,1 +1,0 @@
-export const TMI_MODULE_OPTIONS = '__TMI_MODULE_OPTIONS__';
