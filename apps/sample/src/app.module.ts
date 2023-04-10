@@ -3,7 +3,7 @@ import { TmiModule } from "@tmi-nestjs/core";
 
 @Module({
   imports: [
-    TmiModule,
+    TmiModule.forRoot(),
   ],
 })
 export class AppModule {}

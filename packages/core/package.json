@@ -18,7 +18,8 @@
     "typescript": "latest"
   },
   "devDependencies": {
-    "tsup": "^6.7.0",
-    "tsconfig": "*"
+    "@types/tmi.js": "^1.8.3",
+    "tsconfig": "*",
+    "tsup": "^6.7.0"
   }
 }
