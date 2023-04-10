@@ -7,13 +7,18 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsup src/index.ts --format cjs --dts",
+    "build": "tsup src/index.ts --format cjs --dts --tsconfig tsconfig.build.json",
     "dev": "npm run build -- --watch"
   },
   "dependencies": {
+    "@nestjs/common": "^9.4.0",
+    "@nestjs/core": "^9.4.0",
+    "reflect-metadata": "^0.1.13",
+    "tmi.js": "^1.8.5",
     "typescript": "latest"
   },
   "devDependencies": {
-    "tsup": "^6.7.0"
+    "tsup": "^6.7.0",
+    "tsconfig": "*"
   }
 }

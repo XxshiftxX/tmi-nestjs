@@ -3,5 +3,18 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "dev": "nest start --watch"
+  },
+  "dependencies": {
+    "@nestjs/common": "^9.4.0",
+    "@nestjs/core": "^9.4.0",
+    "@nestjs/platform-fastify": "^9.4.0",
+    "reflect-metadata": "^0.1.13",
+    "tmi.js": "^1.8.5",
+    "@tmi-nestjs/core": "*"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^9.3.0",
+    "tsconfig": "*"
   }
 }
