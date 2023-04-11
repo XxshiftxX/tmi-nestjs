@@ -23,6 +23,9 @@ export class ClientService {
     const client = new Client(optionsWithDefault);
 
     this.client = client;
+    this.client.on('connecting', (address, port) => this.logger.log(`Client connecting... ${address}:${port}`));
+    this.client.on('connected', (address, port) => this.logger.log(`Client connected! ${address}:${port}`));
+    this.client.on('disconnected', (reason) => this.logger.error(`Client disconnected!\n${reason}`));
 
     this.commandsExplorer.explore();
 
