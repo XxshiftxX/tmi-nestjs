@@ -1,14 +1,16 @@
-import { Inject, Injectable, Logger } from "@nestjs/common";
-import { Client, Options } from "tmi.js";
-import { TMI_MODULE_OPTIONS } from "../tmi.constants";
-import { CommandsExplorerService } from "./commands-explorer.service";
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Client, Options } from 'tmi.js';
+import { TMI_MODULE_OPTIONS } from '../tmi.constants';
+import { CommandsExplorerService } from './commands-explorer.service';
 
 @Injectable()
 export class ClientService {
   private readonly logger = new Logger(ClientService.name);
+
   private _client: Client;
 
   public get client() { return this._client; }
+
   private set client(value: Client) { this._client = value; }
 
   constructor(
@@ -21,7 +23,8 @@ export class ClientService {
     const client = new Client(optionsWithDefault);
 
     this.client = client;
-    const commands = this.commandsExplorer.explore();
+
+    this.commandsExplorer.explore();
 
     await client.connect();
   }

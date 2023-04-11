@@ -1,10 +1,12 @@
-import { Controller } from "@nestjs/common";
-import { Command } from "@tmi-nestjs/core";
+import { Controller, Logger } from '@nestjs/common';
+import { Command } from '@tmi-nestjs/core';
 
 @Controller()
 export class AppController {
+  private readonly logger = new Logger(AppController.name);
+
   @Command()
   async test() {
-    console.log('command!');
+    this.logger.log('test command!');
   }
 }

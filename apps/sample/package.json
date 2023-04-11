@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nest start --watch"
+    "dev": "nest start --watch",
+    "lint": "eslint \"src/**/*.ts\" --fix"
   },
   "dependencies": {
     "@nestjs/common": "^9.4.0",
@@ -16,6 +17,7 @@
   },
   "devDependencies": {
     "@nestjs/cli": "^9.3.0",
-    "tsconfig": "*"
+    "tsconfig": "*",
+    "eslint-config-base": "*"
   }
 }

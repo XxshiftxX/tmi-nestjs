@@ -1,4 +1,4 @@
-import { DynamicModule, Inject, Logger, Module, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { DynamicModule, Module, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { DiscoveryModule, MetadataScanner } from '@nestjs/core';
 import { Options } from 'tmi.js';
 import { ClientService } from './services/client.service';
@@ -24,7 +24,7 @@ export class TmiModule implements OnModuleInit, OnModuleDestroy {
     return {
       module: TmiModule,
       providers: [
-        { provide: TMI_MODULE_OPTIONS, useValue: options }
+        { provide: TMI_MODULE_OPTIONS, useValue: options },
       ],
     };
   }

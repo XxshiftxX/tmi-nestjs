@@ -1,7 +1,7 @@
-import { Injectable } from "@nestjs/common";
-import { DiscoveryService, MetadataScanner } from "@nestjs/core";
-import { InstanceWrapper } from "@nestjs/core/injector/instance-wrapper";
-import { COMMAND_METADATA } from "../tmi.constants";
+import { Injectable } from '@nestjs/common';
+import { DiscoveryService, MetadataScanner } from '@nestjs/core';
+import { InstanceWrapper } from '@nestjs/core/injector/instance-wrapper';
+import { COMMAND_METADATA } from '../tmi.constants';
 
 @Injectable()
 export class CommandsExplorerService {
