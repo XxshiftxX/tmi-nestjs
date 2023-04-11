@@ -1,5 +1,11 @@
 # @tmi-nestjs/core
 
+## 0.0.14
+
+### Patch Changes
+
+- Except dev files on publish
+
 ## 0.0.13
 
 ### Patch Changes
