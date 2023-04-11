@@ -7,7 +7,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsup src/index.ts --format cjs --dts --tsconfig tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json",
     "dev": "npm run build -- --watch"
   },
   "dependencies": {
@@ -19,7 +19,6 @@
   },
   "devDependencies": {
     "@types/tmi.js": "^1.8.3",
-    "tsconfig": "*",
-    "tsup": "^6.7.0"
+    "tsconfig": "*"
   }
 }
