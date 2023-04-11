@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { Client, Options } from 'tmi.js';
+import { Client, Options, Userstate } from 'tmi.js';
 import { TMI_MODULE_OPTIONS } from '../tmi.constants';
-import { CommandsExplorerService } from './commands-explorer.service';
+import { CommandsExplorerService, CommandType } from './commands-explorer.service';
 
 @Injectable()
 export class ClientService {
@@ -16,7 +16,7 @@ export class ClientService {
   constructor(
     @Inject(TMI_MODULE_OPTIONS) private readonly options: Options,
     private readonly commandsExplorer: CommandsExplorerService,
-  ) {}
+  ) { }
 
   async start() {
     const optionsWithDefault = this.fillDefaultOption(this.options);
@@ -27,13 +27,39 @@ export class ClientService {
     this.client.on('connected', (address, port) => this.logger.log(`Client connected! ${address}:${port}`));
     this.client.on('disconnected', (reason) => this.logger.error(`Client disconnected!\n${reason}`));
 
-    this.commandsExplorer.explore();
+    this.bindCommands();
 
     await client.connect();
   }
 
   async stop() {
     await this.client?.disconnect();
+  }
+
+  private bindCommands() {
+    const commands = this.commandsExplorer.explore();
+
+    this.client.on('chat', async (channel, userstate, message, self) => {
+      if (self) return;
+
+      const [commandName, ...commandArguments] = message.split(' ');
+      const command = commands.find((command) => command.metadata.name === commandName);
+      if (!command) return;
+
+      const result = await this.executeCommand(command, channel, userstate, message);
+      if (typeof result !== 'string') return;
+
+      this.client.say(channel, result);
+    });
+  }
+
+  private async executeCommand(
+    command: CommandType,
+    channel: string,
+    userstate: Userstate,
+    message: string,
+  ) {
+    return command.instance[command.methodName]();
   }
 
   private fillDefaultOption(options: Options): Options {

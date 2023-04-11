@@ -5,8 +5,8 @@ import { Command } from '@tmi-nestjs/core';
 export class AppController {
   private readonly logger = new Logger(AppController.name);
 
-  @Command()
+  @Command({ name: '!테스트' })
   async test() {
-    this.logger.log('test command!');
+    return '테스트용 커맨드입니다.';
   }
 }
