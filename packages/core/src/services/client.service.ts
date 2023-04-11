@@ -1,6 +1,7 @@
 import { Inject, Injectable, Logger } from "@nestjs/common";
 import { Client, Options } from "tmi.js";
 import { TMI_MODULE_OPTIONS } from "../tmi.constants";
+import { CommandsExplorerService } from "./commands-explorer.service";
 
 @Injectable()
 export class ClientService {
@@ -12,13 +13,21 @@ export class ClientService {
 
   constructor(
     @Inject(TMI_MODULE_OPTIONS) private readonly options: Options,
+    private readonly commandsExplorer: CommandsExplorerService,
   ) {}
 
-  initClient() {
+  async start() {
     const optionsWithDefault = this.fillDefaultOption(this.options);
     const client = new Client(optionsWithDefault);
 
     this.client = client;
+    const commands = this.commandsExplorer.explore();
+
+    await client.connect();
+  }
+
+  async stop() {
+    await this.client?.disconnect();
   }
 
   private fillDefaultOption(options: Options): Options {

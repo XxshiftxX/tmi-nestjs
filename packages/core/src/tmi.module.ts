@@ -1,14 +1,22 @@
 import { DynamicModule, Inject, Logger, Module, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { DiscoveryModule, MetadataScanner } from '@nestjs/core';
 import { Options } from 'tmi.js';
 import { ClientService } from './services/client.service';
+import { CommandsExplorerService } from './services/commands-explorer.service';
 import { TMI_MODULE_OPTIONS } from './tmi.constants';
 
 @Module({
-  providers: [ClientService],
+  imports: [
+    DiscoveryModule,
+  ],
+  providers: [
+    MetadataScanner,
+    ClientService,
+    CommandsExplorerService,
+  ],
 })
 export class TmiModule implements OnModuleInit, OnModuleDestroy {
   constructor(
-    @Inject(TMI_MODULE_OPTIONS) private readonly options: Options,
     private readonly clientService: ClientService,
   ) {}
 
@@ -22,12 +30,10 @@ export class TmiModule implements OnModuleInit, OnModuleDestroy {
   }
 
   async onModuleInit() {
-    this.clientService.initClient();
-
-    await this.clientService.client.connect();
+    await this.clientService.start();
   }
 
   async onModuleDestroy() {
-    await this.clientService.client.disconnect();
+    await this.clientService.stop();
   }
 }

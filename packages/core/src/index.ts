@@ -1,1 +1,2 @@
-export * from './tmi.module'
+export * from './tmi.module';
+export * from './decorators/command.decorator';
