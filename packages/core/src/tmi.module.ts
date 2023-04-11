@@ -1,16 +1,12 @@
 import { DynamicModule, Inject, Logger, Module, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
-import { Client, Options } from 'tmi.js';
+import { Options } from 'tmi.js';
 import { ClientService } from './services/client.service';
-import { TMI_CLIENT, TMI_MODULE_OPTIONS } from './tmi.constants';
+import { TMI_MODULE_OPTIONS } from './tmi.constants';
 
 @Module({
   providers: [ClientService],
 })
 export class TmiModule implements OnModuleInit, OnModuleDestroy {
-  private static readonly logger = new Logger(TmiModule.name, {
-    timestamp: true,
-  });
-
   constructor(
     @Inject(TMI_MODULE_OPTIONS) private readonly options: Options,
     private readonly clientService: ClientService,
