@@ -48,6 +48,6 @@ const createCommandParamDecorator =
         );
       };
 
-export const Param = (property?: number) => (
-  createCommandParamDecorator(CommandParamTypes.PARAM)(property)
+export const Param = (position?: number) => (
+  createCommandParamDecorator(CommandParamTypes.PARAM)(position)
 );
