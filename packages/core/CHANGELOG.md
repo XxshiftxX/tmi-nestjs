@@ -1,5 +1,11 @@
 # @tmi-nestjs/core
 
+## 0.0.15
+
+### Patch Changes
+
+- Add @Commands and simple version of @Params
+
 ## 0.0.14
 
 ### Patch Changes
