@@ -11,6 +11,10 @@
     "dev": "npm run build -- --watch",
     "lint": "eslint \"src/**/*.ts\" --fix"
   },
+  "files": [
+    "dist",
+    "*.md"
+  ],
   "dependencies": {
     "@nestjs/common": "^9.4.0",
     "@nestjs/core": "^9.4.0",
