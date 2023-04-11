@@ -48,6 +48,10 @@ const createCommandParamDecorator =
         );
       };
 
-export const Param = (position?: number) => (
-  createCommandParamDecorator(CommandParamTypes.PARAM)(position)
-);
+export function Param(): ParameterDecorator;
+export function Param(position: number): ParameterDecorator;
+export function Param(position?: number) {
+  return createCommandParamDecorator(CommandParamTypes.PARAM)(position);
+}
+
+Param();
