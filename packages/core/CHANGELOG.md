@@ -1,5 +1,11 @@
 # @tmi-nestjs/core
 
+## 0.0.16
+
+### Patch Changes
+
+- Add Parameter Decorators and Apply execution Context
+
 ## 0.0.15
 
 ### Patch Changes
