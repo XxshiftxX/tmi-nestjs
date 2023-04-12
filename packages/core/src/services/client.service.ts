@@ -47,7 +47,7 @@ export class ClientService {
       const command = commands.find((command) => command.metadata.name === commandName);
       if (!command) return;
 
-      const result = await this.executeCommand(command, { channel, userstate, message });
+      const result = await this.executeCommand(command, channel, userstate, message);
       if (typeof result !== 'string') return;
 
       this.client.say(channel, result);
@@ -60,16 +60,14 @@ export class ClientService {
       methodName: string;
       metadata: CommandMetadata;
     },
-    context: {
-      channel: string;
-      userstate: Userstate;
-      message: string;
-    },
+    channel: string,
+    userstate: Userstate,
+    message: string,
   ) {
     const { methodName, callback } = command;
     this.logger.log(`Command executed:${methodName}`);
 
-    return callback(context);
+    return callback(channel, userstate, message);
   }
 
   private fillDefaultOption(options: Options): Options {

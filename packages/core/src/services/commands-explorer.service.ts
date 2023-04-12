@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DiscoveryService, ExternalContextCreator, MetadataScanner } from '@nestjs/core';
+import { ExternalContextCreator, MetadataScanner, ModulesContainer } from '@nestjs/core';
 import { InstanceWrapper } from '@nestjs/core/injector/instance-wrapper';
 import { CommandMetadata } from '../decorators/command.decorator';
 import { CommandParamsFactory } from '../factories/command-params.factory';
@@ -15,14 +15,17 @@ export class CommandsExplorerService {
   private readonly commandParamsFactory = new CommandParamsFactory();
 
   constructor(
-    private readonly discoveryService: DiscoveryService,
     private readonly metadataScanner: MetadataScanner,
     private readonly externalContextCreator: ExternalContextCreator,
+    private readonly modulesContainer: ModulesContainer,
   ) {}
 
   explore() {
-    const controllers = this.discoveryService.getControllers();
-    const commands = controllers.flatMap((wrapper) => this.filterCommands(wrapper));
+    const modules = [...this.modulesContainer.values()];
+    const commands = modules.flatMap((moduleRef) => {
+      const providers = [...moduleRef.providers.values()];
+      return providers.map((wrapper) => this.filterCommands(wrapper)).flat();
+    });
 
     return commands;
   }
@@ -63,7 +66,7 @@ export class CommandsExplorerService {
       this.commandParamsFactory,
       undefined,
       undefined,
-      { guards: false, filters: false, interceptors: false },
+      undefined,
       'tmi',
     );
 

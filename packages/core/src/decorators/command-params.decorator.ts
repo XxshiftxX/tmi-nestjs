@@ -1,13 +1,20 @@
 /* eslint-disable operator-linebreak */
 /* eslint-disable implicit-arrow-linebreak */
-import { PipeTransform, Type } from '@nestjs/common';
+
+import { ParamData, PipeTransform, Type } from '@nestjs/common';
+import { ChatUserstate } from 'tmi.js';
 import { COMMAND_PARAMETER_METADATA } from '../tmi.constants';
+
+type KnownKeys<T> = {
+  [ P in keyof T as string extends P ? never : number extends P ? never : P ] : T[P]
+};
 
 export enum CommandParamTypes {
   PARAM,
+  MESSAGE,
+  USERSTATE,
+  CHANNEL,
 }
-
-type ParamData = object | string | number;
 
 export interface CommandParamMetadata {
   index: number;
@@ -54,4 +61,17 @@ export function Param(position?: number) {
   return createCommandParamDecorator(CommandParamTypes.PARAM)(position);
 }
 
-Param();
+export function Message() {
+  return createCommandParamDecorator(CommandParamTypes.MESSAGE)();
+}
+
+export function Userstate(): ParameterDecorator;
+export function Userstate(key: keyof KnownKeys<ChatUserstate>): ParameterDecorator;
+export function Userstate(key: string): ParameterDecorator;
+export function Userstate(key?: string) {
+  return createCommandParamDecorator(CommandParamTypes.USERSTATE)(key);
+}
+
+export function Channel() {
+  return createCommandParamDecorator(CommandParamTypes.CHANNEL)();
+}
