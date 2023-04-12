@@ -1,5 +1,11 @@
 # @tmi-nestjs/core
 
+## 0.1.1
+
+### Patch Changes
+
+- Add ExternalContextCreator as provider
+
 ## 0.1.0
 
 ### Minor Changes
