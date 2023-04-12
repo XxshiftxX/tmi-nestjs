@@ -1,5 +1,11 @@
 # @tmi-nestjs/core
 
+## 0.1.3
+
+### Patch Changes
+
+- Rollback add default provider
+
 ## 0.1.2
 
 ### Patch Changes
