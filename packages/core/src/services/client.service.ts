@@ -1,9 +1,8 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Client, Options, Userstate } from 'tmi.js';
-import { CommandParamMetadata } from '../decorators';
-import { COMMAND_PARAMETER_METADATA, TMI_MODULE_OPTIONS } from '../tmi.constants';
-import { exchangeKeyForValue } from '../utils/command-params-factory';
-import { CommandsExplorerService, CommandType } from './commands-explorer.service';
+import { CommandMetadata } from '../decorators';
+import { TMI_MODULE_OPTIONS } from '../tmi.constants';
+import { CommandsExplorerService } from './commands-explorer.service';
 
 @Injectable()
 export class ClientService {
@@ -44,11 +43,11 @@ export class ClientService {
     this.client.on('chat', async (channel, userstate, message, self) => {
       if (self) return;
 
-      const [commandName, ...commandArguments] = message.split(' ');
+      const [commandName] = message.split(' ');
       const command = commands.find((command) => command.metadata.name === commandName);
       if (!command) return;
 
-      const result = await this.executeCommand(command, channel, userstate, message);
+      const result = await this.executeCommand(command, { channel, userstate, message });
       if (typeof result !== 'string') return;
 
       this.client.say(channel, result);
@@ -56,32 +55,21 @@ export class ClientService {
   }
 
   private async executeCommand(
-    command: CommandType,
-    channel: string,
-    userstate: Userstate,
-    message: string,
+    command: {
+      callback: (...args: any[]) => Promise<any>;
+      methodName: string;
+      metadata: CommandMetadata;
+    },
+    context: {
+      channel: string;
+      userstate: Userstate;
+      message: string;
+    },
   ) {
-    const { instance, methodName } = command;
-    const { constructor } = instance;
-    this.logger.log(`Command executed:${constructor.name}:${methodName}`);
+    const { methodName, callback } = command;
+    this.logger.log(`Command executed:${methodName}`);
 
-    const metadataMap = Reflect.getMetadata(COMMAND_PARAMETER_METADATA, constructor, methodName);
-    const metadata: CommandParamMetadata[] = Object.values(metadataMap);
-    const maxIndex = metadata.sort((a, b) => b.index - a.index)[0];
-
-    const sorted = new Array(maxIndex.index + 1).fill(null)
-      .map((_, index) => metadata.find((metadata) => metadata.index === index));
-
-    const args = sorted.map((metadata) => (
-      metadata
-        ? exchangeKeyForValue(metadata.paramtype, metadata.data, { channel, userstate, message })
-        : null
-    ));
-
-    this.logger.log(JSON.stringify(Object.values(metadata)));
-    this.logger.log(JSON.stringify(args));
-
-    return command.instance[command.methodName](...args);
+    return callback(context);
   }
 
   private fillDefaultOption(options: Options): Options {
