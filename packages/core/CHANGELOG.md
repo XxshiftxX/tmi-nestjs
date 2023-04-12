@@ -1,5 +1,11 @@
 # @tmi-nestjs/core
 
+## 0.1.2
+
+### Patch Changes
+
+- Add ModulesContainer as provider
+
 ## 0.1.1
 
 ### Patch Changes
