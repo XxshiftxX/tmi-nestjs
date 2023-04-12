@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TmiModule } from '@tmi-nestjs/core';
-import { AppController } from 'app.controller';
+import { AppController } from './app.controller';
+import { AppGateway } from './app.gateway';
 
 @Module({
   imports: [
@@ -14,8 +15,8 @@ import { AppController } from 'app.controller';
       channels: [process.env.TMI_CHANNEL],
     }),
   ],
-  controllers: [
-    AppController,
+  providers: [
+    AppGateway,
   ],
 })
 export class AppModule {}
