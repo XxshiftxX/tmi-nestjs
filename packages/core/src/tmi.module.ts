@@ -1,5 +1,5 @@
 import { DynamicModule, Module, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
-import { MetadataScanner } from '@nestjs/core';
+import { ExternalContextCreator, MetadataScanner } from '@nestjs/core';
 import { Options } from 'tmi.js';
 import { ClientService } from './services/client.service';
 import { CommandsExplorerService } from './services/commands-explorer.service';
@@ -10,6 +10,7 @@ import { TMI_MODULE_OPTIONS } from './tmi.constants';
     MetadataScanner,
     ClientService,
     CommandsExplorerService,
+    ExternalContextCreator,
   ],
 })
 export class TmiModule implements OnModuleInit, OnModuleDestroy {
