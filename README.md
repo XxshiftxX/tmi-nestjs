@@ -1,73 +1,56 @@
-# Turborepo starter
+<div align="center">
 
-This is an official npm starter turborepo.
+# tmi-nestjs
 
-## What's inside?
+tmi-nestjs is NestJS package for tmi.js
 
-This turborepo uses [npm](https://www.npmjs.com/) as a package manager. It includes the following packages/apps:
+</div>
 
-### Apps and Packages
+## Getting Started
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
+```typescript
+/**
+ * If you chat "!sum 2 3",
+ * The bot will reply with "@XxshiftxX 2 + 3 = 5"  
+ */
+@UseGuards(AuthGuard)
+@Command({ name: '!sum' })
+public sum(
+  @Param(1, ParseIntPipe) first: number,
+  @Param(2, ParseIntPipe) second: number,
+  @Userstate('username') username: string,
+) {
+  const result = first + second;
+  if (result > 10) return "over ten!";
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-npm run build
+  return `@${username} ${first} + ${second} = ${result}`;
+}
 ```
 
-### Develop
+## Installation
 
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-npm run dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
+Start by installing the required packages:
+```sh
+$ npm i @tmi-nestjs/core tmi.js
+$ npm i -D @types/tmi.js
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+We can import the `TmiModule` and configure it with the `forRoot()` static method.
+The type of configs are satisfy [tmi.js config](https://tmijs.com/#guide-options).
+```typescript
+import { Module } from '@nestjs/common';
+import { TmiModule } from '@tmi-nestjs/core';
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your turborepo:
-
+@Module({
+  imports: [
+    TmiModule.forRoot({
+      identity: {
+        username: process.env.TMI_USERNAME,
+        password: process.env.TMI_PASSWORD,
+      },
+      channels: [process.env.TMI_CHANNEL],
+    }),
+  ],
+})
+export class AppModule {}
 ```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
