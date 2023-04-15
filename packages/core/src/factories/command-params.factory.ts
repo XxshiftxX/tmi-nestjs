@@ -7,7 +7,7 @@ export class CommandParamsFactory implements ParamsFactory {
   exchangeKeyForValue(
     type: CommandParamTypes,
     data: ParamData,
-    [channel, userstate, message] : [channel: string, userstate: ChatUserstate, message: string ],
+    [channel, userstate, message] : [channel: string, userstate: ChatUserstate, message: string],
   ) {
     const params = message.split(' ');
 
@@ -16,7 +16,8 @@ export class CommandParamsFactory implements ParamsFactory {
         if (data) return typeof data === 'number' ? params[data] : null;
         return params;
       case CommandParamTypes.MESSAGE:
-        return message;
+        if (data) return typeof data === 'number' ? params.slice(data).join(' ') : null;
+        return params.slice(1).join(' ');
       case CommandParamTypes.USERSTATE:
         if (data) return typeof data === 'string' ? userstate[data] : null;
         return userstate;

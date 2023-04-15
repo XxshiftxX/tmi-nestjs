@@ -79,8 +79,20 @@ export function Param(
 
 export function Message();
 export function Message(...pipes: (Type<PipeTransform> | PipeTransform)[]);
-export function Message(...pipes: (Type<PipeTransform> | PipeTransform)[]) {
-  return createCommandParamDecorator(CommandParamTypes.MESSAGE)(null, ...pipes);
+export function Message(offset: number);
+export function Message(offset: number, ...pipes: (Type<PipeTransform> | PipeTransform)[]);
+export function Message(
+  offsetOrPipe?: number | (Type<PipeTransform> | PipeTransform),
+  ...pipes: (Type<PipeTransform> | PipeTransform)[]
+) {
+  if (offsetOrPipe === undefined) {
+    return createCommandParamDecorator(CommandParamTypes.MESSAGE)();
+  }
+  if (typeof offsetOrPipe === 'number') {
+    return createCommandParamDecorator(CommandParamTypes.MESSAGE)(offsetOrPipe, ...pipes);
+  }
+
+  return createCommandParamDecorator(CommandParamTypes.MESSAGE)(offsetOrPipe, ...pipes);
 }
 
 export function Userstate(): ParameterDecorator;
