@@ -1,5 +1,11 @@
 # @tmi-nestjs/core
 
+## 0.1.6
+
+### Patch Changes
+
+- Add offset to @Message decorator
+
 ## 0.1.5
 
 ### Patch Changes
