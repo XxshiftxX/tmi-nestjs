@@ -1,5 +1,11 @@
 # @tmi-nestjs/core
 
+## 0.1.4
+
+### Patch Changes
+
+- Add pipe to param decorators
+
 ## 0.1.3
 
 ### Patch Changes
