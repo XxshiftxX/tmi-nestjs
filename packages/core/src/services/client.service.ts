@@ -1,6 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { Client, Options, Userstate } from 'tmi.js';
-import { CommandMetadata } from '../decorators';
+import { Client, Options } from 'tmi.js';
 import { TMI_MODULE_OPTIONS } from '../tmi.constants';
 import { CommandsExplorerService } from './commands-explorer.service';
 
